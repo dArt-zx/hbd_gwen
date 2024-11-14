@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dangerous website</title>
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: black;
+      color: #ff99cc;
+      text-align: center;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    @font-face {
+      font-family: 'love';
+      src: url('fonts/Cookiemonster-gv11.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'ticking-timebomb';
+      src: url('fonts/ticking-timebomb-bb.regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    .title {
+      font-size: 3em;
+      color: #ff99cc;
+      font-family: 'love', cursive;
+      margin: 0;
+      position: absolute;
+    }
+
+    .countdown {
+      position: absolute;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .time {
+      font-size: 3em;
+      margin: 15px 0;
+      color: red;
+      font-family: 'ticking-timebomb', sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div class="title" id="title">Time left for the special day</div>
+  <div class="countdown">
+    <div id="time" class="time">Loading...</div>
+  </div>
+
+  <audio id="birthdayMusic" src="audio\music.mp3" preload="auto"></audio>
+
+  <script>
+    function getTargetDate() {
+        const now = new Date();
+        let targetDate = new Date(now.getFullYear(), 10, 15, 0, 0, 0);
+        if (now > targetDate) {
+            targetDate.setFullYear(now.getFullYear() + 1);
+        }
+        return targetDate;
+    }
+
+    function formatTimeUnit(unit) {
+      return unit < 10 ? `0${unit}` : unit;
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      let targetDate = getTargetDate();
+      const timeDiff = targetDate - now;
+
+      if (timeDiff <= 0) {
+        document.getElementById("title").textContent = "Happy Birthday to my babyyy gwen 😽";
+        document.getElementById("time").textContent = "";
+
+        document.title = "bozooo letzz party";
+
+        const music = document.getElementById("birthdayMusic");
+        music.play();
+      } else {
+        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+        document.getElementById("title").textContent = "Time left for the special day";
+        document.getElementById("time").textContent = `${formatTimeUnit(days)}:${formatTimeUnit(hours)}:${formatTimeUnit(minutes)}:${formatTimeUnit(seconds)}`;
+      }
+    }
+
+    setInterval(updateCountdown, 1000);
+    
+  </script>
+</body>
+</html>
