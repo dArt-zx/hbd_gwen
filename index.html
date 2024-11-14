@@ -66,14 +66,12 @@
     <div id="time" class="time">Loading...</div>
   </div>
 
-  <audio id="birthdayMusic" src="music.mp3" preload="auto"></audio>
-
   <script>
     function getTargetDate() {
         const now = new Date();
-        let targetDate = new Date(now.getFullYear(), 10, 15, 0, 0, 0); // November 15 at midnight
+        let targetDate = new Date(now.getFullYear(), 10, 15, 0, 0, 0);
         if (now > targetDate) {
-            targetDate.setFullYear(now.getFullYear() + 1); // Next year if today is past November 15
+            targetDate.setFullYear(now.getFullYear() + 1);
         }
         return targetDate;
     }
@@ -82,47 +80,19 @@
       return unit < 10 ? `0${unit}` : unit;
     }
 
-    function playMusic() {
-      const music = document.getElementById("birthdayMusic");
-      music.play().catch((error) => {
-          // Autoplay blocked, show play button
-          const playButton = document.createElement("button");
-          playButton.textContent = "Play Birthday Music 🎶";
-          playButton.style.position = "absolute";
-          playButton.style.bottom = "20px";
-          playButton.style.left = "50%";
-          playButton.style.transform = "translateX(-50%)";
-          playButton.style.padding = "10px 20px";
-          playButton.style.backgroundColor = "#ff99cc";
-          playButton.style.border = "none";
-          playButton.style.color = "#fff";
-          playButton.style.fontSize = "1em";
-          playButton.style.cursor = "pointer";
-          document.body.appendChild(playButton);
-          playButton.addEventListener("click", () => {
-              music.play();
-              playButton.remove();
-          });
-      });
-    }
-
     function updateCountdown() {
       const now = new Date();
       const targetDate = getTargetDate();
       const timeDiff = targetDate - now;
 
-      // Check if today is November 15
       if (now.getMonth() === 10 && now.getDate() === 15) {
         document.getElementById("title").textContent = "Happy Birthday to my babyyy gwen 😽";
         document.getElementById("time").textContent = "";
         document.title = "bozooo letzz party";
-        playMusic();
       } else if (timeDiff <= 0) {
-        // Restart countdown if the target date has passed
         targetDate.setFullYear(now.getFullYear() + 1);
         updateCountdown();
       } else {
-        // Update countdown timer
         const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
