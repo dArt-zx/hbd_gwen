@@ -66,6 +66,8 @@
     <div id="time" class="time">Loading...</div>
   </div>
 
+  <audio id="birthdaySong" src="music.mp3" preload="auto"></audio>
+
   <script>
     function getTargetDate() {
         const now = new Date();
@@ -85,10 +87,13 @@
       const targetDate = getTargetDate();
       const timeDiff = targetDate - now;
 
-      if (now.getMonth() === 10 && now.getDate() === 15) {
+      const audio = document.getElementById("birthdaySong");
+
+      if (now.getMonth() === 10 && now.getDate() === 15 && now.getHours() === 0 && now.getMinutes() === 0) {
         document.getElementById("title").textContent = "Happy Birthday to my babyyy gwen 😽";
         document.getElementById("time").textContent = "";
         document.title = "bozooo letzz party";
+        audio.play(); // Play the music
       } else if (timeDiff <= 0) {
         targetDate.setFullYear(now.getFullYear() + 1);
         updateCountdown();
