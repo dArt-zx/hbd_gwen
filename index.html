@@ -69,13 +69,23 @@
   <audio id="birthdaySong" src="music.mp3" preload="auto"></audio>
 
   <script>
+    let audioPlayed = false;
+
+    document.body.addEventListener("click", () => {
+      const audio = document.getElementById("birthdaySong");
+      if (!audioPlayed) {
+        audio.play();
+        audioPlayed = true;
+      }
+    });
+
     function getTargetDate() {
-        const now = new Date();
-        let targetDate = new Date(now.getFullYear(), 10, 15, 0, 0, 0);
-        if (now > targetDate) {
-            targetDate.setFullYear(now.getFullYear() + 1);
-        }
-        return targetDate;
+      const now = new Date();
+      let targetDate = new Date(now.getFullYear(), 10, 15, 0, 0, 0);
+      if (now > targetDate) {
+        targetDate.setFullYear(now.getFullYear() + 1);
+      }
+      return targetDate;
     }
 
     function formatTimeUnit(unit) {
@@ -86,14 +96,16 @@
       const now = new Date();
       const targetDate = getTargetDate();
       const timeDiff = targetDate - now;
-
       const audio = document.getElementById("birthdaySong");
 
       if (now.getMonth() === 10 && now.getDate() === 15 && now.getHours() === 0 && now.getMinutes() === 0) {
         document.getElementById("title").textContent = "Happy Birthday to my babyyy gwen 😽";
         document.getElementById("time").textContent = "";
         document.title = "bozooo letzz party";
-        audio.play(); // Play the music
+        if (!audioPlayed) {
+          audio.play();
+          audioPlayed = true;
+        }
       } else if (timeDiff <= 0) {
         targetDate.setFullYear(now.getFullYear() + 1);
         updateCountdown();
